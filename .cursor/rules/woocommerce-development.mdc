@@ -1,0 +1,47 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- Use WooCommerce hooks, actions, and filters for customizations.
+- Override WooCommerce templates in a child theme, not in the plugin.
+- Register custom product types, order statuses, and checkout fields using WooCommerce APIs.
+- Use the WooCommerce REST API for integrations; always require authentication and permission checks.
+- Add custom settings using the WooCommerce settings API.
+- Test all customizations with the latest WooCommerce version.
+
+## Examples
+
+```php
+// Add a custom product tab
+add_filter( 'woocommerce_product_tabs', function( $tabs ) {
+    $tabs['custom_tab'] = array(
+        'title'    => __( 'Custom Tab', 'my-plugin' ),
+        'priority' => 50,
+        'callback' => 'my_plugin_custom_tab_content'
+    );
+    return $tabs;
+});
+function my_plugin_custom_tab_content() {
+    echo '<h2>' . esc_html__( 'Custom Tab Content', 'my-plugin' ) . '</h2>';
+}
+```
+
+```php
+// Override WooCommerce template in child theme
+// Copy woocommerce/templates/single-product/title.php to yourtheme/woocommerce/single-product/title.php and modify as needed.
+```
+
+```php
+// Secure WooCommerce REST API endpoint
+add_action( 'rest_api_init', function() {
+    register_rest_route( 'my-plugin/v1', '/custom', array(
+        'methods' => 'GET',
+        'callback' => 'my_plugin_custom_endpoint',
+        'permission_callback' => function() {
+            return current_user_can( 'manage_woocommerce' );
+        },
+    ));
+});
+```
+

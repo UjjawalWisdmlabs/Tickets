@@ -1,0 +1,74 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+// File: .cursor/rules/wordpress-plugin-development.mdc
+
+# MDC Rule: WordPress Plugin Development Best Practices
+
+- Prefix all function, class, and global variable names to avoid naming collisions.
+- Use PHP namespaces for all custom classes and functions.
+- Use Composer for autoloading classes and managing dependencies.
+- Use hooks (actions and filters) to extend WordPress functionality.
+- Provide clear documentation and inline comments for all public APIs.
+- Use the WordPress Settings API for plugin options.
+- Ensure plugins are translation-ready using WordPress internationalization functions and load text domains.
+- Follow the WordPress plugin security guidelines, including capability checks and nonces for all forms and AJAX.
+- Use `dbDelta()` for database schema changes, and version and document all schema changes with upgrade routines.
+- Follow best practices for custom REST API endpoints: require authentication, permission checks, and input sanitization.
+- Maintain a changelog and use semantic versioning (MAJOR.MINOR.PATCH).
+- Test plugins with the latest version of WordPress.
+
+## Examples
+
+```php
+// Namespaces and Composer autoloading
+namespace MyPlugin\Admin;
+class SettingsPage {}
+// composer.json: { "autoload": { "psr-4": { "MyPlugin\\": "src/" } } }
+```
+
+```php
+// Capability check and nonce
+if ( ! current_user_can( 'manage_options' ) ) { wp_die( esc_html__( 'You do not have permission.', 'my-plugin' ) ); }
+wp_nonce_field( 'my_plugin_action', 'my_plugin_nonce' );
+if ( isset( $_POST['my_plugin_nonce'] ) && wp_verify_nonce( $_POST['my_plugin_nonce'], 'my_plugin_action' ) ) { /* ... */ }
+```
+
+```php
+// DB schema versioning
+global $wpdb;
+$table = $wpdb->prefix . 'my_plugin_table';
+$sql = "CREATE TABLE $table (id INT PRIMARY KEY)";
+require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+dbDelta( $sql );
+update_option( 'my_plugin_db_version', '1.0.0' );
+```
+
+```php
+// REST API endpoint
+add_action( 'rest_api_init', function() {
+    register_rest_route( 'my-plugin/v1', '/data', array(
+        'methods' => 'GET',
+        'callback' => 'my_plugin_get_data',
+        'permission_callback' => function() { return current_user_can( 'read' ); },
+    ));
+});
+```
+
+```md
+// Changelog.md
+## [Unreleased]
+- Added REST API endpoint for custom data.
+- Improved security with capability checks and nonces.
+```
+
+This rule applies to all *.php files in all subdirectories.
+
+
+
+
+
+
+

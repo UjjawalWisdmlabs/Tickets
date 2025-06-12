@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+// File: .cursor/rules/wordpress-performance-optimization.mdc
+
+# MDC Rule: WordPress/PHP Performance Optimization
+
+- Use object caching and transients to minimize repeated database queries.
+- Minimize the use of expensive operations inside loops.
+- Load scripts and styles conditionally only when needed.
+- Avoid loading unnecessary plugins or themes.
+- Use autoloading and Composer for dependency management where possible.
+- Optimize database queries and use indexes appropriately.
+- Profile and monitor performance using tools like Query Monitor.
+- Use build tools to bundle and minify front-end assets; enqueue only optimized assets.
+
+This rule applies to all *.php files in all subdirectories.
+
+// Example: Enqueue minified asset
+wp_enqueue_script(
+    'my-plugin-main',
+    plugins_url( 'assets/js/main.min.js', __FILE__ ),
+    array( 'jquery' ),
+    '1.0.0',
+    true
+);
+
+
+
+
+

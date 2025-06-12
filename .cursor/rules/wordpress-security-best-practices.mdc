@@ -1,0 +1,55 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+// File: .cursor/rules/wordpress-security-best-practices.mdc
+
+# MDC Rule: WordPress/PHP Security Best Practices
+
+- Always validate and sanitize all user input using WordPress functions such as sanitize_text_field(), esc_html(), esc_url(), etc.
+- Use nonces for all form submissions and AJAX requests to prevent CSRF attacks.
+- Never trust $_GET, $_POST, $_REQUEST, or $_COOKIE data directly.
+- Escape all output using appropriate WordPress escaping functions before rendering to the browser.
+- Use prepared statements for all database queries (e.g., $wpdb->prepare()).
+- Do not expose sensitive information in error messages.
+- Keep all plugins, themes, and WordPress core up to date.
+- Use capability checks (e.g., current_user_can()) for all privileged actions.
+- Prevent direct file access by checking ABSPATH (e.g., defined('ABSPATH') || exit;).
+- Require authentication, permission checks, and input sanitization for custom REST API endpoints.
+
+## Examples
+
+```php
+// Capability check
+if ( ! current_user_can( 'manage_options' ) ) {
+    wp_die( esc_html__( 'You do not have permission.', 'my-plugin' ) );
+}
+```
+
+```php
+// Prevent direct file access
+defined( 'ABSPATH' ) || exit;
+```
+
+```php
+// REST API security
+add_action( 'rest_api_init', function() {
+    register_rest_route( 'my-plugin/v1', '/secure', array(
+        'methods' => 'POST',
+        'callback' => 'my_plugin_secure_callback',
+        'permission_callback' => function() {
+            return current_user_can( 'edit_posts' );
+        },
+    ));
+});
+```
+
+This rule applies to all *.php files in all subdirectories.
+
+
+
+
+
+
+

@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- Follow WordPress JavaScript and CSS coding standards.
+- Use build tools to bundle, minify, and version assets.
+- Implement cache busting by appending file versions to enqueued assets.
+- Test front-end code for cross-browser compatibility.
+
+## Examples
+
+```js
+// Example: Enqueue versioned JS asset in PHP
+defined('ABSPATH') || exit;
+wp_enqueue_script(
+    'my-plugin-main',
+    plugins_url('assets/js/main.min.js', __FILE__),
+    array('jquery'),
+    '1.2.3', // version for cache busting
+    true
+);
+```
+
+```css
+/* Example: CSS file header */
+/*
+Theme Name: My Theme
+Description: Custom styles for My Theme
+Version: 1.0.0
+*/
+```
+

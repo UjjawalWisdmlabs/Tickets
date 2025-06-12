@@ -1,0 +1,57 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+// File: .cursor/rules/wordpress-theme-development.mdc
+
+# MDC Rule: WordPress Theme Development Best Practices
+
+- Use child themes for customizations instead of modifying parent themes directly.
+- Enqueue styles and scripts using wp_enqueue_style() and wp_enqueue_script().
+- Use template hierarchy and template parts for maintainable theme structure.
+- Make themes translation-ready using WordPress internationalization functions and load text domains.
+- Follow accessibility best practices (WCAG 2.1 AA) for all user-facing features.
+- Use the Customizer API for theme options.
+- Use modern JavaScript (ES6+) and build tools for asset management; enqueue minified and versioned assets.
+- Include proper theme headers for WordPress recognition.
+- Test themes with the latest version of WordPress and major browsers.
+
+## Examples
+
+```php
+// Accessibility
+<label for="user_email"><?php esc_html_e( 'Email Address', 'my-theme' ); ?></label>
+<input type="email" id="user_email" name="user_email" aria-required="true" />
+```
+
+```php
+// Asset management
+enqueue_script(
+    'my-theme-main',
+    get_template_directory_uri() . '/assets/js/main.min.js',
+    array( 'jquery' ),
+    '1.0.0',
+    true
+);
+```
+
+```php
+// Theme header
+/*
+Theme Name: My Theme
+Description: Example theme.
+Version: 1.0.0
+Author: Your Name
+Text Domain: my-theme
+*/
+```
+
+This rule applies to all *.php files in all subdirectories.
+
+
+
+
+
+
+

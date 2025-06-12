@@ -1,0 +1,42 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- Register custom post types and taxonomies using `register_post_type` and `register_taxonomy`.
+- Prefix all custom post type and taxonomy slugs.
+- Document and register shortcodes with clear usage and sanitization.
+- Build widgets using `WP_Widget` and follow WordPress widget API.
+- Ensure plugins/themes are compatible with multisite installations.
+- Add WP-CLI commands for advanced plugin/theme management.
+
+## Examples
+
+```php
+// Register a custom post type
+add_action( 'init', function() {
+    register_post_type( 'myplugin_book', array(
+        'label' => __( 'Books', 'my-plugin' ),
+        'public' => true,
+        'supports' => array( 'title', 'editor', 'thumbnail' ),
+    ));
+});
+```
+
+```php
+// Register a shortcode
+add_shortcode( 'myplugin_hello', function( $atts ) {
+    $atts = shortcode_atts( array( 'name' => 'World' ), $atts, 'myplugin_hello' );
+    return 'Hello, ' . esc_html( $atts['name'] ) . '!';
+});
+```
+
+```php
+// WP-CLI command
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+    WP_CLI::add_command( 'myplugin greet', function( $args ) {
+        WP_CLI::success( 'Hello from MyPlugin!' );
+    });
+}
+```
+

@@ -1,0 +1,56 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+// File: .cursor/rules/wordpress-documentation.mdc
+
+# MDC Rule: WordPress/PHP Documentation Best Practices
+
+- Use PHPDoc blocks for all classes, functions, and methods.
+- Document all parameters, return types, and exceptions.
+- Provide usage examples for public APIs.
+- Keep documentation up to date with code changes.
+- Use clear, concise language and avoid ambiguity.
+- Document all hooks (actions and filters) with purpose, parameters, and return values.
+- Add inline comments for complex logic.
+- Include proper plugin/theme headers for WordPress recognition.
+
+## Examples
+
+```php
+// Hook documentation
+/**
+ * Fires after saving plugin settings.
+ *
+ * @param array $settings The saved settings.
+ * @return void
+ */
+do_action( 'my_plugin_after_save_settings', $settings );
+```
+
+```php
+// Inline comment for complex logic
+// Calculate the total price including tax
+$total = $subtotal * ( 1 + $tax_rate );
+```
+
+```php
+// Plugin header
+/*
+Plugin Name: My Plugin
+Description: Example plugin.
+Version: 1.0.0
+Author: Your Name
+Text Domain: my-plugin
+*/
+```
+
+This rule applies to all *.php files in all subdirectories.
+
+
+
+
+
+
+

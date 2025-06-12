@@ -1,0 +1,53 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+// File: .cursor/rules/wordpress-testing.mdc
+
+# MDC Rule: WordPress/PHP Testing Best Practices
+
+- Write unit tests for all critical business logic using PHPUnit (preferred) or Pest (if compatible with WordPress).
+- Use integration tests for plugin/theme interactions with WordPress core.
+- Mock external dependencies in tests.
+- Ensure tests are isolated and repeatable.
+- Run tests automatically in CI/CD pipelines.
+- Maintain high test coverage and review coverage reports regularly.
+- Ensure all tests are compatible with the current WordPress version.
+
+This rule applies to all *.php files in all subdirectories.
+
+// Example: PHPUnit test
+class SampleTest extends WP_UnitTestCase {
+    public function test_addition() {
+        $this->assertEquals( 2, 1 + 1 );
+    }
+}
+
+// Example: Pest test (if compatible)
+test('addition works', function () {
+    expect(1 + 1)->toBe(2);
+});
+
+// Example: CI/CD integration (GitHub Actions)
+// .github/workflows/test.yml
+// name: Run WordPress Tests
+// on: [push, pull_request]
+// jobs:
+//   test:
+//     runs-on: ubuntu-latest
+//     steps:
+//       - uses: actions/checkout@v2
+//       - name: Setup PHP
+//         uses: shivammathur/setup-php@v2
+//         with:
+//           php-version: '8.0'
+//       - name: Install dependencies
+//         run: composer install
+//       - name: Run tests
+//         run: vendor/bin/phpunit
+
+
+
+
+

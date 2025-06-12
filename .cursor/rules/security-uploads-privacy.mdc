@@ -1,0 +1,30 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- Validate and sanitize all uploaded files; restrict allowed MIME types.
+- Store uploads outside the web root if possible.
+- Document and comply with GDPR and privacy requirements.
+- Provide data export and erasure tools for users.
+
+## Examples
+
+```php
+// Restrict allowed file types
+add_filter( 'upload_mimes', function( $mimes ) {
+    $mimes['pdf'] = 'application/pdf';
+    unset( $mimes['exe'] );
+    return $mimes;
+});
+```
+
+```php
+// GDPR: Provide data export
+add_action( 'init', function() {
+    if ( isset( $_GET['myplugin_export_data'] ) && current_user_can( 'export_own_data' ) ) {
+        // Export user data logic here
+    }
+});
+```
+

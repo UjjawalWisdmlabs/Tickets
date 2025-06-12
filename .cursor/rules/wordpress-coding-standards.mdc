@@ -1,0 +1,64 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+// File: .cursor/rules/wordpress-coding-standards.mdc
+
+# MDC Rule: WordPress/PHP Coding Standards
+
+- Follow the official WordPress PHP coding standards: https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/
+- Where WordPress standards conflict with PSR-12, WordPress standards take precedence. Use PSR-12 only where not in conflict.
+- Indent code using 4 spaces, not tabs.
+- Use lowercase for all PHP keywords, functions, and constructs.
+- Use Yoda conditions only where assignment in conditionals is possible; otherwise, follow current WordPress core standards.
+- Always use full PHP opening tags `<?php` (never short tags).
+- End files with a single blank line.
+- Omit the closing `?>` tag in PHP-only files.
+- Use PHP namespaces for all custom classes and functions in plugins/themes.
+- Use Composer for autoloading classes where possible.
+
+## Examples
+
+```php
+// Namespaces and Composer autoloading
+namespace MyPlugin\Service;
+class MyService {
+    public function do_something() {
+        // ...
+    }
+}
+```
+
+```json
+// composer.json
+{
+  "autoload": {
+    "psr-4": {"MyPlugin\\": "src/"}
+  }
+}
+// After editing composer.json, run: composer dump-autoload
+```
+
+```php
+// Yoda condition (assignment in conditional)
+if ( true === $is_enabled ) {
+    // ...
+}
+```
+
+```php
+// Omit closing PHP tag in PHP-only files
+// <?php
+// ... PHP code ...
+// (no closing ?> tag)
+```
+
+This rule applies to all `*.php` files in all subdirectories.
+
+
+
+
+
+
+

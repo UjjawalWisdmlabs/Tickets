@@ -1,0 +1,37 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- Implement update and migration routines for database/schema changes.
+- Clean up options, custom tables, and scheduled events on plugin deactivation/uninstall.
+- Use `register_deactivation_hook` and `register_uninstall_hook`.
+- Display admin notices using the WordPress admin notice API.
+- Ensure backward compatibility for existing users.
+
+## Examples
+
+```php
+// Register deactivation and uninstall hooks
+register_deactivation_hook( __FILE__, 'my_plugin_deactivate' );
+register_uninstall_hook( __FILE__, 'my_plugin_uninstall' );
+
+function my_plugin_deactivate() {
+    // Clean up scheduled events
+    wp_clear_scheduled_hook( 'my_plugin_cron_event' );
+}
+function my_plugin_uninstall() {
+    // Remove options and custom tables
+    delete_option( 'my_plugin_option' );
+    global $wpdb;
+    $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}my_plugin_table" );
+}
+```
+
+```php
+// Display admin notice
+add_action( 'admin_notices', function() {
+    echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'my-plugin' ) . '</p></div>';
+});
+```
+

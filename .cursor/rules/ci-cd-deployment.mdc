@@ -1,0 +1,32 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- Use CI/CD pipelines for testing, linting, and deployment.
+- Automate versioning and changelog updates.
+- Tag releases and use semantic versioning.
+- Deploy to staging before production.
+
+## Examples
+
+```yaml
+# Example: GitHub Actions workflow for deployment
+name: Deploy Plugin
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: composer install
+      - name: Run tests
+        run: vendor/bin/phpunit
+      - name: Deploy
+        run: ./deploy.sh
+```
+
